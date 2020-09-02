@@ -2,7 +2,7 @@
 Helpful scripts validated by the BASH shell (but may work in other shells too).
 
 ## Script: list_processhandles.sh
-Details TBA
+Details TBA.
 
 ## Script: hide_comments.sh
-Details TBA
+Details TBA.
