@@ -1,5 +1,9 @@
 #!/bin/sh
 
+# Show open handles - if any - for a particular file.
+#
+# ./list_processhandles.sh /etc/samba/smb.conf
+
 echo "******************************************"
 echo "*"
 echo -n "* Parameter passed in: "
