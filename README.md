@@ -1,13 +1,28 @@
-# bash_utilities
-Helpful scripts validated by the BASH shell (but may work in other shells too).
 
-## Script: list_processhandles.sh
-Details TBA.
+## Script: `list_processhandles.sh`
+Show open handles - if any - for a particular file.
 
-## Script: hide_comments.sh
-Details TBA.
+> ./list_processhandles.sh /etc/samba/smb.conf
 
-## Script: exportXsettings.sh
+## Script: `hide_comments.sh`
+Remove all lines from a file that are comments or empty lines.
+
+A comment begins with either a '#' or ';'
+
+Examples:
+
+>  ./hideComments.sh /etc/ssh/sshd_config
+
+>  ./hideComments.sh /etc/samba/smb.conf
+
+Or:
+
+> cat /etc/ssh/sshd_config | ./hideComments.sh
+
+> cat /etc/samba/smb.conf | ./hideComments.sh
+
+## Script `exportXsettings.sh`
+
 Using X11 tunneling with SSH is a very powerful, convenient, and secure mechanism.
 
 However, some *Nix (Unix and Linux) platforms do not carry the:
