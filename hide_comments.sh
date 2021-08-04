@@ -1,28 +1,30 @@
 #!/bin/bash
 
-# This script will remove all commented lines or any lines that start
-# with a new line character (preceded by 0 or more whitespaces).
+# This script will remove all lines that are:
 #
-# A whitespace in this script is defined as: [ \r\t\f]
+# - Comments ('#' or ';')
+# - Empty lines
 #
-# This script is mostly for config files where you want to remove all the "fluff" and see only
-# the "effective" settings. 
+# This script helps troubleshoot config files.
 #
-# This script basically invokes a Perl one-liner.
+# Sometimes you want to know what the config file settings are and
+# you don't care about any comments.
 #
-# A file can be passed to it as an argument:
+# This script invokes a Perl One-liner.
 #
-# ./hideComments.sh  /etc/ssh/sshd_config
+# A file can be passed to it as an argument or piped to it.
 #
-# or PIPED to it:
+# Two examples:
 #
-# cat /etc/ssh/sshd_config |   ./hideComments.sh
+# File name passed as an argument:
+#
+#   ./hideComments.sh /etc/ssh/sshd_config
+#   ./hideComments.sh /etc/samba/smb.conf
+#
+# File piped to it:
+#
+#   cat /etc/ssh/sshd_config | ./hideComments.sh
+#   cat /etc/samba/smb.conf | ./hideComments.sh
 
-
-# A whitespace in this script is defined as: [ \r\t\f]
-/usr/bin/perl -ne  ' unless ( /^[ \r\t\f]*# || /^[ \r\t\f]*\n/) { 
-
- print   "$_" 
-
-} ' $1
+/usr/bin/perl -ne  'print unless /^(#|;|\n)/ ' $1
 
