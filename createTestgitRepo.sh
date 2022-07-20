@@ -1,30 +1,37 @@
 rm -Rf .git *
 
 make_commit(){
- echo ":)" >> ./script.sh
+ echo "$2" >> ./$1
  git add *
- git commit -m "Commit message"
- sleep 1
+ git commit -m "$2"
+ sleep 2
 }
-
 
 git init
 
-make_commit
-make_commit
-make_commit
+c=1
 
-git branch feature
-git checkout feature
-sleep 1
+p=1; p_file=Production.sh ; p_message="This is production code, line"
 
-make_commit
-make_commit
+f=1; f_file=Feature.sh; f_message="This is feature code, line"
+
+make_commit "$p_file"  "(commit $c) $p_message $p" ; ((p=p+1)) ; ((c=c+1))
+make_commit "$p_file"  "(commit $c) $p_message $p" ; ((p=p+1)) ; ((c=c+1))
+
+git checkout -b feature
+sleep 2
+make_commit "$f_file"  "(commit $c) $f_message $f"; ((f=f+1)) ; ((c=c+1))
+make_commit "$f_file"  "(commit $c) $f_message $f"; ((f=f+1)) ; ((c=c+1))
 
 git checkout master
 sleep 2
+make_commit "$p_file"  "(commit $c) $p_message $p" ; ((p=p+1)) ; ((c=c+1))
+make_commit "$p_file"  "(commit $c) $p_message $p" ; ((p=p+1)) ; ((c=c+1))
 
-make_commit
-make_commit
+git checkout feature
+sleep 2
+make_commit "$f_file"  "(commit $c) $f_message $f" ; ((f=f+1)) ; ((c=c+1))
+make_commit "$f_file"  "(commit $c) $f_message $f" ; ((f=f+1)) ; ((c=c+1))
 
 git log --oneline --graph --decorate --all
+
