@@ -2,9 +2,10 @@
 
 # 
 # This script will assume the process ID (PID) provided as the root
-# and display its information with the command 'ps'.
+# PID and will display its information.
 #
-# Plus, all of its child processes.
+# Along with all of its decendants and hierarchy (-H)
+#
 #
 # Ways to use this command:
 #
@@ -14,4 +15,4 @@
 
 ROOT_PID=$1
 
-ps -f -p $(pstree $ROOT_PID -c -Ap | grep -o -E "[0-9]+")
+ps -f -H -p $(pstree $ROOT_PID -c -Ap | grep -o -E "[0-9]+")
