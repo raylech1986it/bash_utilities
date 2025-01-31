@@ -1,30 +1,27 @@
 #!/bin/bash
 
-# This script will remove all lines that are:
+# This script will remove all commented lines from a file.
 #
-# - Comments ('#' or ';')
-# - Empty lines
+# A useful troubleshooting trick when you need to remove the "noise" from 
+# a config file and only read the effective settings.
 #
-# This script helps troubleshoot config files.
+# A comment is defined as a line that begins with either of the following
+# characters:
 #
-# Sometimes you want to know what the config file settings are and
-# you don't care about any comments.
-#
-# This script invokes a Perl One-liner.
-#
-# A file can be passed to it as an argument or piped to it.
-#
-# Two examples:
-#
-# File name passed as an argument:
-#
-#   ./hideComments.sh /etc/ssh/sshd_config
-#   ./hideComments.sh /etc/samba/smb.conf
-#
-# File piped to it:
-#
-#   cat /etc/ssh/sshd_config | ./hideComments.sh
-#   cat /etc/samba/smb.conf | ./hideComments.sh
+# - '#'
+# - ';'
+# - Empty line, "^\n"
+
+if [ $1 = "-h" ]; then
+cat <<EOF
+Command usage:
+
+sh ./hideComments.sh /etc/ssh/sshd_config
+cat /etc/samba/smb.conf | ./hideComments.sh
+sh ./hideComments.sh -h # this help page
+
+EOF
+return 0
+fi
 
 /usr/bin/perl -ne  'print unless /^(#|;|\n)/ ' $1
-

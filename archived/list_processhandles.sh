@@ -1,8 +1,19 @@
 #!/bin/sh
 
-# Show open handles - if any - for a particular file.
-#
-# ./list_processhandles.sh /etc/samba/smb.conf
+if [ $1 = "-h" ]; then
+
+cat <<EOF
+
+Show any open handles for a particular file.
+
+Command usage:
+
+sh  ./list_processhandles.sh <FILEPATH>
+./ps_tree.sh <FILEPATH>
+
+EOF
+return 0
+fi
 
 echo "******************************************"
 echo "*"
