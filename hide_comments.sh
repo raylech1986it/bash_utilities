@@ -1,27 +1,39 @@
-#!/bin/bash
+#!/usr/bin/bash
 
-# This script will remove all commented lines from a file.
+# This bash script will remove all commented lines or any lines that start
+# with a new line character (preceded by 0 or more whitespaces).
+# A whitespace in this script is defined as: [ \r\t\f]
 #
-# A useful troubleshooting trick when you need to remove the "noise" from 
-# a config file and only read the effective settings.
+# This script is great mostly for config files where you want to remove all the "fluff" and see only
+# what the config file is implementing. Side note, the bash script just invokes a Perl one-liner.
 #
-# A comment is defined as a line that begins with either of the following
-# characters:
+# Usages:
 #
-# - '#'
-# - ';'
-# - Empty line, "^\n"
+# ./hideComments.sh  /etc/ssh/sshd_config
+# cat /etc/ssh/sshd_config |   ./hideComments.sh
+#
+# A whitespace in this script is defined as: [ \r\t\f]
+#
 
-if [ $1 = "-h" ]; then
+if [ "$#" -eq 0 ]; then
+    set -- /dev/stdin
+    /usr/bin/perl -ne 'unless ( /^[ \r\t\f]*#|;/ || /^[ \r\t\f]*\n/) { print $_ } '
+
+elif [ "$1" == "-h" ]; then
+
 cat <<EOF
-Command usage:
+###########
+#         #
+# Usages: #
+#         #
+###########
 
-sh ./hideComments.sh /etc/ssh/sshd_config
-cat /etc/samba/smb.conf | ./hideComments.sh
-sh ./hideComments.sh -h # this help page
+./hideComments.sh  /etc/ssh/sshd_config
+cat /etc/ssh/sshd_config | ./hideComments.sh
 
 EOF
-return 0
+
+else
+   /usr/bin/perl -ne 'unless ( /^[ \r\t\f]*#|;/ || /^[ \r\t\f]*\n/) { print $_ } ' $1
 fi
 
-/usr/bin/perl -ne  'print unless /^(#|;|\n)/ ' $1
